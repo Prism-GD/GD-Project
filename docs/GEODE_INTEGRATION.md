@@ -73,7 +73,7 @@ Fontes primárias:
 
 O código-fonte oficial do Geode Android Launcher foi adicionado como submódulo Git em `third_party/geode-android`, fixado no commit upstream `9e136f728d35bdd60b8e66f382e0d1e405376854`. O workflow do GitHub Actions agora inicializa submódulos recursivamente. A licença e o histórico permanecem no repositório upstream.
 
-Isso incorpora o código-fonte do motor oficial ao projeto, mas **não significa que o Prisma já o execute**: a aplicação atual ainda não foi substituída/adaptada para usar as Activities, o JNI, o patcher C++ e o processo de instalação desse subprojeto. O build atual do Prisma ainda compila a casca original. Além disso, o submódulo upstream fixa Geode 5.11.2 no Gradle, então o alvo 6.0.0-alpha.1 ainda exige adaptação e validação de download/recursos.
+Isso incorpora o código-fonte do motor oficial ao projeto, mas **não significa que o Prisma já o execute**: a aplicação atual ainda não foi substituída/adaptada para usar as Activities, o JNI, o patcher C++ e o processo de instalação desse subprojeto. O build integrado agora é executado diretamente a partir do submódulo oficial, com um patch de CI que fixa Geode 6.0.0-alpha.1, altera o applicationId para `com.prismgd.launcher` e o nome visível para `Prisma Launcher`. O módulo antigo em `app/` permanece como protótipo legado e não é o artefato de integração.
 
 ## Decisão de implementação
 
@@ -81,4 +81,16 @@ A integração deve ser feita como port/adaptação do launcher Android upstream
 
 Não tratar o launcher upstream como biblioteca, não copiar apenas `Geode.*.so` para o APK e não mover arquivos `.geode` para uma pasta privada arbitrária: nenhuma dessas ações, isoladamente, carrega mods no processo do jogo.
 
-**Estado atual:** o código-fonte upstream está incorporado como submódulo fixado, mas o port de runtime ainda não está concluído. A integração funcional exige ligar o módulo Android upstream ao aplicativo Prisma, adaptar o carregamento para Geode 6.0.0-alpha.1 e validar o patcher no Geometry Dash 2.2091 em aparelho físico. Nenhum APK deve ser tratado como entrega até esses passos terminarem.
+## Build nativo do Prisma (13/11/2026)
+
+O workflow foi alterado para compilar o app oficial dentro do submódulo, em vez de compilar a casca Kotlin antiga. A adaptação de CI:
+- fixa `currentGeodeVersion` em `6.0.0-alpha.1`;
+- muda o applicationId da variante Google Play para `com.prismgd.launcher`;
+- muda o nome do app para `Prisma Launcher`;
+- usa JDK 17, Gradle 9.4.1, Android SDK 37, NDK 30.0.16248370 e CMake 3.21.0;
+- compila a variante que empacota o loader e os recursos;
+- verifica a presença de `libgeode.so` e `liblauncherfix.so` nas ABIs ARM64 e ARMv7.
+
+A release oficial v6.0.0-alpha.1 publica os arquivos `geode-v6.0.0-alpha.1-android64.zip`, `android32.zip` e `resources.zip`. O workflow usa esses assets através do mecanismo de download do upstream.
+
+**Estado atual:** o código-fonte nativo foi incorporado e o pipeline foi adaptado para produzir uma variante Prisma com o Geode 6 alpha. Ainda é necessário confirmar que o build passa, verificar os binários dentro do APK e, principalmente, testar no Galaxy A04s com GD 2.2091: abrir o jogo, ver o menu Geode e carregar um mod ARM64 compatível. Até esses testes, não declarar a integração funcional nem entregar APK.
