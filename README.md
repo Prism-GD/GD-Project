@@ -11,6 +11,8 @@ A estrutura Android inicial está na pasta `app/`. Consulte:
 - [Integração Geode](docs/GEODE_INTEGRATION.md)
 - [Build](docs/BUILD.md)
 
-**Estado:** protótipo inicial. A tela já permite abrir o Geometry Dash instalado e importar arquivos `.geode` para a área privada do Prisma. A integração nativa do Geode ainda não foi incorporada; portanto, a importação não ativa mods dentro do jogo.
+**Estado:** protótipo inicial. A tela abre o Geometry Dash instalado e importa arquivos `.geode` para a área privada do Prisma. A integração nativa do Geode ainda não foi portada; portanto, a importação não ativa mods dentro do jogo.
+
+O build de CI gera um APK de debug quando passa. Isso não significa que a integração Geode esteja pronta.
 
 Não distribuímos arquivos proprietários do Geometry Dash.
