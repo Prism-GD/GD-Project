@@ -2,85 +2,157 @@ package com.prismgd.launcher
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
-import android.provider.OpenableColumns
+import android.view.Gravity
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import java.io.File
 
 class MainActivity : Activity() {
- private lateinit var status: TextView
- private val pickMod = 41
+    private lateinit var root: LinearLayout
+    private lateinit var status: TextView
+    private lateinit var modList: LinearLayout
 
- override fun onCreate(savedInstanceState: Bundle?) {
-  super.onCreate(savedInstanceState)
-  val root = LinearLayout(this).apply {
-   orientation = LinearLayout.VERTICAL
-   setPadding(32, 64, 32, 32)
-   setBackgroundColor(0xFF111018.toInt())
-  }
-  fun text(value: String, size: Float) = TextView(this).apply {
-   this.text = value
-   textSize = size
-   setTextColor(0xFFFFFFFF.toInt())
-   setPadding(0, 12, 0, 12)
-  }
-  root.addView(text("PRISMA LAUNCHER", 26f))
-  root.addView(text("Seu espaço para Geometry Dash + Geode", 15f))
-  status = text("Geode: integração nativa em desenvolvimento", 14f)
-  root.addView(status)
-  root.addView(Button(this).apply {
-   this.text = "Abrir Geometry Dash"
-   setOnClickListener { launchGame() }
-  })
-  root.addView(Button(this).apply {
-   this.text = "Importar mod .geode"
-   setOnClickListener {
-    val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-     type = "*/*"
-     addCategory(Intent.CATEGORY_OPENABLE)
+    private val openMod = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        if (uri != null) importMod(uri)
     }
-    startActivityForResult(intent, pickMod)
-   }
-  })
-  root.addView(text("Importar guarda o pacote no Prisma; ainda não instala/carrega o mod no jogo.", 12f))
-  setContentView(root)
- }
 
- private fun launchGame() {
-  val intent = packageManager.getLaunchIntentForPackage("com.robtopx.geometryjump")
-  if (intent == null) Toast.makeText(this, "Geometry Dash não encontrado. Instale o jogo primeiro.", Toast.LENGTH_LONG).show()
-  else startActivity(intent)
- }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        buildScreen()
+        refreshMods()
+    }
 
- @Deprecated("Use Activity Result API in a future UI refactor")
- override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-  super.onActivityResult(requestCode, resultCode, data)
-  if (requestCode == pickMod && resultCode == RESULT_OK) {
-   data?.data?.let { uri -> if (copyMod(uri)) status.text = "Pacote importado para a biblioteca local do Prisma." }
-  }
- }
+    private fun buildScreen() {
+        val page = ScrollView(this)
+        root = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(28, 48, 28, 32)
+            setBackgroundColor(0xFF111018.toInt())
+        }
 
- private fun copyMod(uri: Uri): Boolean = try {
-  val dir = File(filesDir, "mods").apply { mkdirs() }
-  val name = contentResolver.query(uri, null, null, null, null)?.use { cursor ->
-   val index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-   if (cursor.moveToFirst() && index >= 0) cursor.getString(index) else null
-  } ?: ("imported-" + System.currentTimeMillis() + ".geode")
-  if (!name.endsWith(".geode", ignoreCase = true)) {
-   Toast.makeText(this, "Selecione um arquivo .geode", Toast.LENGTH_SHORT).show()
-   return false
-  }
-  contentResolver.openInputStream(uri)?.use { input ->
-   File(dir, name).outputStream().use { output -> input.copyTo(output) }
-  } ?: return false
-  Toast.makeText(this, "Mod importado: " + name, Toast.LENGTH_LONG).show()
-  true
- } catch (error: Exception) {
-  Toast.makeText(this, "Falha ao importar: " + error.message, Toast.LENGTH_LONG).show()
-  false
- }
+        root.addView(label("PRISMA", 30f, true))
+        root.addView(label("LAUNCHER  •  GEODE EDITION", 12f, true, 0xFFB7A6FF.toInt()))
+        root.addView(label("Um espaço para organizar seus mods de Geometry Dash.", 15f))
+
+        status = label(
+            "Loader nativo Geode: ainda não integrado. Os arquivos abaixo ficam apenas na biblioteca local.",
+            13f, false, 0xFFFFD18A.toInt()
+        )
+        root.addView(status)
+        root.addView(actionButton("ABRIR GEOMETRY DASH") { launchGame() })
+        root.addView(actionButton("IMPORTAR ARQUIVO .GEODE") { openMod.launch(arrayOf("*/*")) })
+        root.addView(label("SUA BIBLIOTECA", 18f, true))
+        modList = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        root.addView(modList)
+        root.addView(label(
+            "Alvo de desenvolvimento: Geometry Dash 2.2091 / Geode 6.0.0-alpha.1. " +
+                "A alpha é experimental. Importar um pacote aqui não o instala nem o carrega no jogo.",
+            12f, false, 0xFFAAA6B8.toInt()
+        ))
+
+        page.addView(root)
+        setContentView(page)
+    }
+
+    private fun label(value: String, size: Float, bold: Boolean = false, color: Int = 0xFFFFFFFF.toInt()) =
+        TextView(this).apply {
+            text = value
+            textSize = size
+            setTextColor(color)
+            if (bold) setTypeface(typeface, Typeface.BOLD)
+            setPadding(0, 10, 0, 10)
+        }
+
+    private fun actionButton(value: String, action: () -> Unit) = Button(this).apply {
+        text = value
+        isAllCaps = false
+        setOnClickListener { action() }
+    }
+
+    private fun launchGame() {
+        val intent = packageManager.getLaunchIntentForPackage("com.robtopx.geometryjump")
+        if (intent == null) {
+            Toast.makeText(this, "Geometry Dash não encontrado. Instale o jogo completo primeiro.", Toast.LENGTH_LONG).show()
+        } else {
+            startActivity(intent)
+        }
+    }
+
+    private fun importMod(uri: Uri) {
+        try {
+            val name = queryDisplayName(uri) ?: ("mod-" + System.currentTimeMillis() + ".geode")
+            if (!name.endsWith(".geode", ignoreCase = true)) {
+                Toast.makeText(this, "Escolha um arquivo com extensão .geode", Toast.LENGTH_LONG).show()
+                return
+            }
+            val destination = File(modsDirectory(), name)
+            contentResolver.openInputStream(uri)?.use { input ->
+                destination.outputStream().use { output -> input.copyTo(output) }
+            } ?: throw IllegalStateException("Não foi possível ler o arquivo selecionado.")
+            status.text = "Arquivo importado para a biblioteca local. Ainda não foi instalado no Geode."
+            Toast.makeText(this, "Importado: " + name, Toast.LENGTH_SHORT).show()
+            refreshMods()
+        } catch (error: Exception) {
+            Toast.makeText(this, "Falha ao importar: " + error.message, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun queryDisplayName(uri: Uri): String? {
+        contentResolver.query(uri, null, null, null, null)?.use { cursor ->
+            val column = cursor.getColumnIndex(android.provider.OpenableColumns.DISPLAY_NAME)
+            if (cursor.moveToFirst() && column >= 0) return cursor.getString(column)
+        }
+        return null
+    }
+
+    private fun modsDirectory() = File(filesDir, "mods").apply { mkdirs() }
+
+    private fun refreshMods() {
+        if (!::modList.isInitialized) return
+        modList.removeAllViews()
+        val mods = modsDirectory().listFiles()
+            ?.filter { it.isFile && it.extension.equals("geode", ignoreCase = true) }
+            ?.sortedBy { it.name.lowercase() }
+            .orEmpty()
+        if (mods.isEmpty()) {
+            modList.addView(label("Nenhum pacote importado ainda.", 13f, false, 0xFFAAA6B8.toInt()))
+            return
+        }
+        mods.forEach { file ->
+            val row = LinearLayout(this).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = Gravity.CENTER_VERTICAL
+                setPadding(0, 4, 0, 4)
+            }
+            val name = TextView(this).apply {
+                text = file.name
+                textSize = 13f
+                setTextColor(0xFFFFFFFF.toInt())
+                maxLines = 2
+                layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+            }
+            val remove = Button(this).apply {
+                text = "Remover"
+                isAllCaps = false
+                setOnClickListener {
+                    if (file.delete()) {
+                        Toast.makeText(this@MainActivity, "Pacote removido da biblioteca.", Toast.LENGTH_SHORT).show()
+                        refreshMods()
+                    } else {
+                        Toast.makeText(this@MainActivity, "Não foi possível remover o pacote.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            row.addView(name)
+            row.addView(remove)
+            modList.addView(row)
+        }
+    }
 }
