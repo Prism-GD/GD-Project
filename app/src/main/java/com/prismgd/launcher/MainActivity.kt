@@ -1,7 +1,5 @@
 package com.prismgd.launcher
 
-import android.app.Activity
-import android.content.Intent
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
@@ -11,10 +9,11 @@ import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import java.io.File
 
-class MainActivity : Activity() {
+class MainActivity : ComponentActivity() {
     private lateinit var root: LinearLayout
     private lateinit var status: TextView
     private lateinit var modList: LinearLayout
