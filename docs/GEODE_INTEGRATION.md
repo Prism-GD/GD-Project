@@ -50,3 +50,29 @@ Esses são alvos de desenvolvimento, não uma declaração de compatibilidade te
 - Não baixar binários não verificados nem carregar mods desconhecidos automaticamente.
 - Não declarar compatibilidade com Android/ABI sem teste real.
 - O APK de debug da casca atual não é um launcher Geode funcional.
+
+
+## Auditoria do código upstream (13/11/2026)
+
+Foi inspecionada a árvore atual de `geode-sdk/android-launcher`, não apenas a release binária:
+
+- O projeto upstream é um aplicativo Android completo: Activity própria para executar o Geometry Dash, classes de diretório/instalação, JNI e patcher C++.
+- O arquivo upstream `app/build.gradle.kts` atualmente fixa `currentGeodeVersion = "5.11.2"`; portanto, apontar apenas para a branch principal também **não** entrega automaticamente Geode 6.0.0-alpha.1.
+- O launcher upstream faz download e validação de metadados/hash dos binários Geode e extrai recursos do loader durante o build.
+- O patcher nativo atua no processo do jogo (incluindo hooks ELF/relocações); não pode ser substituído por uma chamada Android que apenas abre o pacote do Geometry Dash.
+- A release 1.9.0 publicada em 19/10/2026 declara nas próprias notas que não é Geode para 2.209, apesar de corrigir alguns crashes dessa versão.
+
+Fontes primárias:
+- https://github.com/geode-sdk/android-launcher
+- https://github.com/geode-sdk/android-launcher/blob/main/app/build.gradle.kts
+- https://github.com/geode-sdk/android-launcher/blob/main/app/src/main/cpp/patcher.cpp
+- https://github.com/geode-sdk/android-launcher/releases/tag/1.9.0
+- https://github.com/geode-sdk/geode/releases/tag/v6.0.0-alpha.1
+
+## Decisão de implementação
+
+A integração deve ser feita como port/adaptação do launcher Android upstream para a identidade e interface Prisma, mantendo o motor de inicialização, as classes de acesso ao jogo, o patcher/JNI, o empacotamento de recursos e os avisos/licenças. O Geode deve ser fixado explicitamente na versão alpha solicitada e os binários devem ser validados por hash.
+
+Não tratar o launcher upstream como biblioteca, não copiar apenas `Geode.*.so` para o APK e não mover arquivos `.geode` para uma pasta privada arbitrária: nenhuma dessas ações, isoladamente, carrega mods no processo do jogo.
+
+**Estado após a auditoria:** ainda não há port nativo implementado nesta branch. A integração permanece em andamento e não há APK elegível para entrega. O próximo marco técnico é portar o projeto Android upstream completo e então adaptar o download/empacotamento do loader para v6.0.0-alpha.1, antes de qualquer declaração de compatibilidade com 2.2091.
