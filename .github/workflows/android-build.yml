@@ -37,12 +37,14 @@ jobs:
       - name: Install Android SDK, NDK and CMake
         run: |
           yes | sdkmanager --licenses || true
-          sdkmanager "platform-tools" "platforms;android-37" "ndk;30.0.16248370" "cmake;3.21.0"
+          sdkmanager "platform-tools" "platforms;android-36" "ndk;30.0.16248370" "cmake;3.21.0"
 
       - name: Adapt upstream launcher for Prisma and Geode 6 alpha
         working-directory: third_party/geode-android
         run: |
           set -euo pipefail
+          sed -i 's/compileSdk = 37/compileSdk = 36/' app/build.gradle.kts
+          sed -i 's/targetSdk = 37/targetSdk = 36/' app/build.gradle.kts
           sed -i 's/val currentGeodeVersion = "5.11.2"/val currentGeodeVersion = "6.0.0-alpha.1"/' app/build.gradle.kts
           sed -i 's/applicationId = "com.geode.launcher.play"/applicationId = "com.prismgd.launcher"/' app/build.gradle.kts
           sed -i 's/versionName = "1.9.0"/versionName = "0.2.0-geode6-alpha.1"/' app/build.gradle.kts
