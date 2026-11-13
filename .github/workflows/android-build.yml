@@ -37,7 +37,7 @@ jobs:
       - name: Install Android SDK, NDK and CMake
         run: |
           yes | sdkmanager --licenses || true
-          sdkmanager "platform-tools" "platforms;android-36" "ndk;30.0.16248370" "cmake;3.21.0"
+          sdkmanager "platform-tools" "platforms;android-36" "ndk;30.0.16248370" "cmake;3.22.1"
 
       - name: Adapt upstream launcher for Prisma and Geode 6 alpha
         working-directory: third_party/geode-android
