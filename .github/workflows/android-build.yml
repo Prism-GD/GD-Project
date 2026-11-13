@@ -1,4 +1,4 @@
-name: Android debug build
+name: Prisma Geode Android build
 on:
   push:
     branches: [ main, "prisma/**" ]
@@ -9,10 +9,10 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  build-geode-launcher:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout Prisma with official Geode Android source
         uses: actions/checkout@v4
         with:
           submodules: recursive
@@ -26,27 +26,38 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: "8.9"
+          gradle-version: "9.4.1"
 
-      # GitHub-hosted Ubuntu images already include Android command-line tools.
-      # Avoid a second SDK bootstrap action; use the runner's preinstalled SDK.
       - name: Configure Android SDK
         run: |
           echo "ANDROID_HOME=${ANDROID_HOME:-/usr/local/lib/android/sdk}" >> "$GITHUB_ENV"
           echo "${ANDROID_HOME:-/usr/local/lib/android/sdk}/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
           echo "${ANDROID_HOME:-/usr/local/lib/android/sdk}/platform-tools" >> "$GITHUB_PATH"
 
-      - name: Accept licenses and install SDK packages
+      - name: Install Android SDK, NDK and CMake
         run: |
           yes | sdkmanager --licenses || true
-          sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+          sdkmanager "platform-tools" "platforms;android-37" "ndk;30.0.16248370" "cmake;3.21.0"
 
-      - name: Build debug APK
-        run: gradle --no-daemon assembleDebug
+      - name: Adapt upstream launcher for Prisma and Geode 6 alpha
+        working-directory: third_party/geode-android
+        run: |
+          set -euo pipefail
+          sed -i 's/val currentGeodeVersion = "5.11.2"/val currentGeodeVersion = "6.0.0-alpha.1"/' app/build.gradle.kts
+          sed -i 's/applicationId = "com.geode.launcher.play"/applicationId = "com.prismgd.launcher"/' app/build.gradle.kts
+          sed -i 's/versionName = "1.9.0"/versionName = "0.2.0-geode6-alpha.1"/' app/build.gradle.kts
+          sed -i 's#<string name="app_name" translatable="false">Geode</string>#<string name="app_name" translatable="false">Prisma Launcher</string>#' app/src/main/res/values/strings.xml
+          grep -q 'currentGeodeVersion = "6.0.0-alpha.1"' app/build.gradle.kts
+          grep -q 'applicationId = "com.prismgd.launcher"' app/build.gradle.kts
+          grep -q 'Prisma Launcher' app/src/main/res/values/strings.xml
 
-      - name: Upload debug APK
+      - name: Build Prisma with native Geode loader (arm64 and armeabi-v7a)
+        working-directory: third_party/geode-android
+        run: gradle --no-daemon :app:assembleGooglePlayDebug
+
+      - name: Upload integrated launcher build for validation
         uses: actions/upload-artifact@v4
         with:
-          name: prisma-launcher-debug
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: prisma-geode6-native-validation
+          path: third_party/geode-android/app/build/outputs/apk/googlePlay/debug/*.apk
           if-no-files-found: error
