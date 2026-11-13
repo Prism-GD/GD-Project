@@ -69,10 +69,16 @@ Fontes primárias:
 - https://github.com/geode-sdk/android-launcher/releases/tag/1.9.0
 - https://github.com/geode-sdk/geode/releases/tag/v6.0.0-alpha.1
 
+## Fonte upstream incorporada ao repositório (13/11/2026)
+
+O código-fonte oficial do Geode Android Launcher foi adicionado como submódulo Git em `third_party/geode-android`, fixado no commit upstream `9e136f728d35bdd60b8e66f382e0d1e405376854`. O workflow do GitHub Actions agora inicializa submódulos recursivamente. A licença e o histórico permanecem no repositório upstream.
+
+Isso incorpora o código-fonte do motor oficial ao projeto, mas **não significa que o Prisma já o execute**: a aplicação atual ainda não foi substituída/adaptada para usar as Activities, o JNI, o patcher C++ e o processo de instalação desse subprojeto. O build atual do Prisma ainda compila a casca original. Além disso, o submódulo upstream fixa Geode 5.11.2 no Gradle, então o alvo 6.0.0-alpha.1 ainda exige adaptação e validação de download/recursos.
+
 ## Decisão de implementação
 
 A integração deve ser feita como port/adaptação do launcher Android upstream para a identidade e interface Prisma, mantendo o motor de inicialização, as classes de acesso ao jogo, o patcher/JNI, o empacotamento de recursos e os avisos/licenças. O Geode deve ser fixado explicitamente na versão alpha solicitada e os binários devem ser validados por hash.
 
 Não tratar o launcher upstream como biblioteca, não copiar apenas `Geode.*.so` para o APK e não mover arquivos `.geode` para uma pasta privada arbitrária: nenhuma dessas ações, isoladamente, carrega mods no processo do jogo.
 
-**Estado após a auditoria:** ainda não há port nativo implementado nesta branch. A integração permanece em andamento e não há APK elegível para entrega. O próximo marco técnico é portar o projeto Android upstream completo e então adaptar o download/empacotamento do loader para v6.0.0-alpha.1, antes de qualquer declaração de compatibilidade com 2.2091.
+**Estado atual:** o código-fonte upstream está incorporado como submódulo fixado, mas o port de runtime ainda não está concluído. A integração funcional exige ligar o módulo Android upstream ao aplicativo Prisma, adaptar o carregamento para Geode 6.0.0-alpha.1 e validar o patcher no Geometry Dash 2.2091 em aparelho físico. Nenhum APK deve ser tratado como entrega até esses passos terminarem.
