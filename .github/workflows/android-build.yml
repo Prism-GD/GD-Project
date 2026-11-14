@@ -66,6 +66,18 @@ jobs:
           grep -q 'applicationId = "com.prismgd.launcher"' app/build.gradle.kts
           grep -q 'Prisma Launcher' app/src/main/res/values/strings.xml
 
+      - name: Configure native build and use the NDK-supported LLD linker
+        working-directory: third_party/geode-android
+        run: |
+          set -euo pipefail
+          gradle --no-daemon ':app:configureCMakeDebug[arm64-v8a]' ':app:configureCMakeDebug[armeabi-v7a]'
+          # NDK 30 no longer ships GNU gold; replace the stale gold selector in generated Ninja files.
+          find app/.cxx -name build.ninja -print -exec sed -i 's/-fuse-ld=gold/-fuse-ld=lld/g' {} +
+          if grep -R -- '-fuse-ld=gold' app/.cxx; then
+            echo "Unsupported gold linker flag remains in native build files"
+            exit 1
+          fi
+
       - name: Build Prisma with native Geode loader (arm64 and armeabi-v7a)
         working-directory: third_party/geode-android
         run: gradle --no-daemon :app:assembleStandardDebug
