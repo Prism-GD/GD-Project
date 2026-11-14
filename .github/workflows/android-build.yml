@@ -45,7 +45,16 @@ jobs:
           set -euo pipefail
           sed -i 's/val currentGeodeVersion = "5.11.2"/val currentGeodeVersion = "6.0.0-alpha.1"/' app/build.gradle.kts
           sed -i 's/applicationId = "com.geode.launcher"/applicationId = "com.prismgd.launcher"/' app/build.gradle.kts
-          python3 -c 'from pathlib import Path; p=Path("app/build.gradle.kts"); s=p.read_text(); s=s.replace(\'buildConfigField("String", "PREBUNDLED_GEODE", "null")\', \'buildConfigField("String", "PREBUNDLED_GEODE", "\\\\"$currentGeodeVersion\\\\"")\'); p.write_text(s)'
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path("app/build.gradle.kts")
+          s = p.read_text()
+          s = s.replace(
+              'buildConfigField("String", "PREBUNDLED_GEODE", "null")',
+              'buildConfigField("String", "PREBUNDLED_GEODE", "\\"$currentGeodeVersion\\"")',
+          )
+          p.write_text(s)
+          PY
           sed -i 's/withFlavor("distribution" to "googlePlay")/withFlavor("distribution" to "standard")/' app/build.gradle.kts
           sed -i 's/versionName = "1.9.0"/versionName = "0.2.0-geode6-alpha.1"/' app/build.gradle.kts
           sed -i 's#<string name="app_name" translatable="false">Geode</string>#<string name="app_name" translatable="false">Prisma Launcher</string>#' app/src/main/res/values/strings.xml
