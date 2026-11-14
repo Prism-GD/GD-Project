@@ -64,20 +64,24 @@ jobs:
           sed -i 's#<string name="app_name" translatable="false">Geode</string>#<string name="app_name" translatable="false">Prisma Launcher</string>#' app/src/main/res/values/strings.xml
           grep -q 'currentGeodeVersion = "6.0.0-alpha.1"' app/build.gradle.kts
           grep -q 'applicationId = "com.prismgd.launcher"' app/build.gradle.kts
+          grep -q 'ANDROID_LD=lld' app/build.gradle.kts
           grep -q 'Prisma Launcher' app/src/main/res/values/strings.xml
 
-      - name: Configure native build and use the NDK-supported LLD linker
+      - name: Configure native build with NDK LLD
         working-directory: third_party/geode-android
         run: |
           set -euo pipefail
+          rm -rf app/.cxx
           gradle --no-daemon ':app:configureCMakeDebug[arm64-v8a]' ':app:configureCMakeDebug[armeabi-v7a]'
-          # NDK 30 no longer ships GNU gold; replace the stale gold selector in generated Ninja files.
-          find app/.cxx -name build.ninja -print -exec sed -i 's/-fuse-ld=gold/-fuse-ld=lld/g' {} +
-          if find app/.cxx -name build.ninja -exec grep -H -- '-fuse-ld=gold' {} +; then
-            echo "Unsupported gold linker flag remains in Ninja build commands"
+          # LLD is the NDK default. Remove any stale legacy gold selector from generated Ninja rules.
+          grep -RIl -- '-fuse-ld=gold' app/.cxx | while read -r file; do
+            sed -i 's/-fuse-ld=gold//g' "$file"
+          done
+          if grep -R -- '-fuse-ld=gold' app/.cxx; then
+            echo "Unsupported gold linker flag remains in generated native build files"
             exit 1
           fi
-          echo "Ninja build commands now use the NDK-supported LLD linker."
+          echo "Native build files are configured to use the NDK default linker (LLD)."
 
       - name: Build Prisma with native Geode loader (arm64 and armeabi-v7a)
         working-directory: third_party/geode-android
