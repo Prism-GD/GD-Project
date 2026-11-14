@@ -59,13 +59,14 @@ jobs:
           )
           p.write_text(s)
           PY
-          sed -i 's/arguments("-DANDROID_STL=c++_shared")/arguments("-DANDROID_STL=c++_shared", "-DANDROID_LD=lld")/' app/build.gradle.kts
+          sed -i 's/arguments("-DANDROID_STL=c++_shared")/arguments("-DANDROID_STL=c++_shared", "-DANDROID_LD=lld", "-DANDROID_GOLD_LINKER=OFF")/' app/build.gradle.kts
           sed -i 's/withFlavor("distribution" to "googlePlay")/withFlavor("distribution" to "standard")/' app/build.gradle.kts
           sed -i 's/versionName = "1.9.0"/versionName = "0.2.0-geode6-alpha.1"/' app/build.gradle.kts
           sed -i 's#<string name="app_name" translatable="false">Geode</string>#<string name="app_name" translatable="false">Prisma Launcher</string>#' app/src/main/res/values/strings.xml
           grep -q 'currentGeodeVersion = "6.0.0-alpha.1"' app/build.gradle.kts
           grep -q 'applicationId = "com.prismgd.launcher"' app/build.gradle.kts
           grep -q 'ANDROID_LD=lld' app/build.gradle.kts
+          grep -q 'ANDROID_GOLD_LINKER=OFF' app/build.gradle.kts
           grep -q 'Prisma Launcher' app/src/main/res/values/strings.xml
 
       - name: Configure native build with NDK LLD
@@ -74,15 +75,18 @@ jobs:
           set -euo pipefail
           rm -rf app/.cxx
           gradle --no-daemon ':app:configureCMakeDebug[arm64-v8a]' ':app:configureCMakeDebug[armeabi-v7a]'
-          # LLD is the NDK default. Remove any stale legacy gold selector from generated Ninja rules.
-          grep -RIl -- '-fuse-ld=gold' app/.cxx | while read -r file; do
-            sed -i 's/-fuse-ld=gold//g' "$file"
-          done
-          if grep -R -- '-fuse-ld=gold' app/.cxx; then
+          # Explicitly disable the legacy Gold switch in addition to selecting the NDK LLD linker.
+          if grep -R -- 'ANDROID_GOLD_LINKER:BOOL=ON' app/.cxx; then
+            echo "Legacy Gold linker is still enabled in CMake cache"
+            exit 1
+          fi
+          # Patch any generated Ninja/cache files in case an upstream CMake script injects Gold directly.
+          find app/.cxx app/build/intermediates/cxx -type f -print0 2>/dev/null | xargs -0 -r sed -i 's/-fuse-ld=gold//g'
+          if grep -R -- '-fuse-ld=gold' app/.cxx app/build/intermediates/cxx 2>/dev/null; then
             echo "Unsupported gold linker flag remains in generated native build files"
             exit 1
           fi
-          echo "Native build files are configured to use the NDK default linker (LLD)."
+          echo "Native build files are configured for LLD with Gold disabled."
 
       - name: Build Prisma with native Geode loader (arm64 and armeabi-v7a)
         working-directory: third_party/geode-android
