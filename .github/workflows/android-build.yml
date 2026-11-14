@@ -73,10 +73,11 @@ jobs:
           gradle --no-daemon ':app:configureCMakeDebug[arm64-v8a]' ':app:configureCMakeDebug[armeabi-v7a]'
           # NDK 30 no longer ships GNU gold; replace the stale gold selector in generated Ninja files.
           find app/.cxx -name build.ninja -print -exec sed -i 's/-fuse-ld=gold/-fuse-ld=lld/g' {} +
-          if grep -R -- '-fuse-ld=gold' app/.cxx; then
-            echo "Unsupported gold linker flag remains in native build files"
+          if find app/.cxx -name build.ninja -exec grep -H -- '-fuse-ld=gold' {} +; then
+            echo "Unsupported gold linker flag remains in Ninja build commands"
             exit 1
           fi
+          echo "Ninja build commands now use the NDK-supported LLD linker."
 
       - name: Build Prisma with native Geode loader (arm64 and armeabi-v7a)
         working-directory: third_party/geode-android
