@@ -59,6 +59,7 @@ jobs:
           )
           p.write_text(s)
           PY
+          sed -i 's/arguments("-DANDROID_STL=c++_shared")/arguments("-DANDROID_STL=c++_shared", "-DANDROID_LD=lld")/' app/build.gradle.kts
           sed -i 's/withFlavor("distribution" to "googlePlay")/withFlavor("distribution" to "standard")/' app/build.gradle.kts
           sed -i 's/versionName = "1.9.0"/versionName = "0.2.0-geode6-alpha.1"/' app/build.gradle.kts
           sed -i 's#<string name="app_name" translatable="false">Geode</string>#<string name="app_name" translatable="false">Prisma Launcher</string>#' app/src/main/res/values/strings.xml
