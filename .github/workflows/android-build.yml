@@ -37,7 +37,11 @@ jobs:
       - name: Install Android SDK, NDK and CMake
         run: |
           yes | sdkmanager --licenses || true
-          sdkmanager --channel=3 "platform-tools" "platforms;android-37" "ndk;30.0.16248370" "cmake;3.22.1"
+          sdkmanager --channel=3 "platform-tools" "platforms;android-37.0" "ndk;30.0.16248370" "cmake;3.22.1"
+          # Android publishes API 37 as android-37.0, while this AGP build resolves android-37.
+          SDK_ROOT="${ANDROID_HOME:-/usr/local/lib/android/sdk}"
+          test -d "$SDK_ROOT/platforms/android-37.0"
+          ln -sfn android-37.0 "$SDK_ROOT/platforms/android-37"
 
       - name: Adapt upstream launcher for Prisma and Geode 6 alpha
         working-directory: third_party/geode-android
