@@ -4,10 +4,10 @@ O build integrado usa o código oficial fixado em `third_party/geode-android`.
 
 Requisitos do workflow:
 - JDK 17
-- Gradle 9.4.1
+- Gradle 9.7.1 (alinhado ao wrapper do upstream)
 - Android SDK Platform 37
 - Android NDK 30.0.16248370
-- CMake 3.21.0
+- CMake 3.22.1 (compatível com o mínimo 3.21.0+ exigido pelo upstream)
 
 O GitHub Actions:
 1. inicializa o submódulo oficial;
