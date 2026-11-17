@@ -1,0 +1,902 @@
+[
+  {
+    "name": "br100_modelo_dispositivo",
+    "palette": "138",
+    "spec": "Obter modelo do dispositivo",
+    "typeName": "",
+    "type": "s",
+    "code": "android.os.Build.MODEL",
+    "color": "#3F51B5"
+  },
+  {
+    "name": "br100_fabricante",
+    "palette": "138",
+    "spec": "Obter fabricante",
+    "typeName": "",
+    "type": "s",
+    "code": "android.os.Build.MANUFACTURER",
+    "color": "#3F51B5"
+  },
+  {
+    "name": "br100_marca",
+    "palette": "138",
+    "spec": "Obter marca do dispositivo",
+    "typeName": "",
+    "type": "s",
+    "code": "android.os.Build.BRAND",
+    "color": "#3F51B5"
+  },
+  {
+    "name": "br100_dispositivo",
+    "palette": "138",
+    "spec": "Obter nome interno do dispositivo",
+    "typeName": "",
+    "type": "s",
+    "code": "android.os.Build.DEVICE",
+    "color": "#3F51B5"
+  },
+  {
+    "name": "br100_produto",
+    "palette": "138",
+    "spec": "Obter nome do produto",
+    "typeName": "",
+    "type": "s",
+    "code": "android.os.Build.PRODUCT",
+    "color": "#3F51B5"
+  },
+  {
+    "name": "br100_versao_android",
+    "palette": "138",
+    "spec": "Obter versão do Android",
+    "typeName": "",
+    "type": "s",
+    "code": "android.os.Build.VERSION.RELEASE",
+    "color": "#3F51B5"
+  },
+  {
+    "name": "br100_sdk_android",
+    "palette": "138",
+    "spec": "Obter nível da API Android",
+    "typeName": "",
+    "type": "d",
+    "code": "android.os.Build.VERSION.SDK_INT",
+    "color": "#3F51B5"
+  },
+  {
+    "name": "br100_id_build",
+    "palette": "138",
+    "spec": "Obter identificador da compilação",
+    "typeName": "",
+    "type": "s",
+    "code": "android.os.Build.DISPLAY",
+    "color": "#3F51B5"
+  },
+  {
+    "name": "br100_idioma",
+    "palette": "138",
+    "spec": "Obter idioma do dispositivo",
+    "typeName": "",
+    "type": "s",
+    "code": "java.util.Locale.getDefault().getLanguage()",
+    "color": "#3F51B5"
+  },
+  {
+    "name": "br100_pais",
+    "palette": "138",
+    "spec": "Obter país/região do dispositivo",
+    "typeName": "",
+    "type": "s",
+    "code": "java.util.Locale.getDefault().getCountry()",
+    "color": "#3F51B5"
+  },
+  {
+    "name": "br100_textview_texto",
+    "palette": "138",
+    "spec": "Definir texto do TextView %s.inputOnly para %s",
+    "typeName": "",
+    "type": " ",
+    "code": "((android.widget.TextView) findViewById(R.id.%1$s)).setText(String.valueOf(%2$s));",
+    "color": "#009688"
+  },
+  {
+    "name": "br100_textview_cor",
+    "palette": "138",
+    "spec": "Definir cor do texto %s.inputOnly para %d",
+    "typeName": "",
+    "type": " ",
+    "code": "((android.widget.TextView) findViewById(R.id.%1$s)).setTextColor((int) (%2$s));",
+    "color": "#009688"
+  },
+  {
+    "name": "br100_view_visibilidade",
+    "palette": "138",
+    "spec": "Definir visibilidade da View %s.inputOnly para %d",
+    "typeName": "",
+    "type": " ",
+    "code": "findViewById(R.id.%1$s).setVisibility((int) (%2$s));",
+    "color": "#009688"
+  },
+  {
+    "name": "br100_view_habilitada",
+    "palette": "138",
+    "spec": "Definir View %s.inputOnly habilitada? %b",
+    "typeName": "",
+    "type": " ",
+    "code": "findViewById(R.id.%1$s).setEnabled(%2$s);",
+    "color": "#009688"
+  },
+  {
+    "name": "br100_view_alpha",
+    "palette": "138",
+    "spec": "Definir transparência da View %s.inputOnly para %d",
+    "typeName": "",
+    "type": " ",
+    "code": "findViewById(R.id.%1$s).setAlpha((float) (%2$s));",
+    "color": "#009688"
+  },
+  {
+    "name": "br100_view_foco",
+    "palette": "138",
+    "spec": "Solicitar foco para View %s.inputOnly",
+    "typeName": "",
+    "type": " ",
+    "code": "findViewById(R.id.%1$s).requestFocus();",
+    "color": "#009688"
+  },
+  {
+    "name": "br100_view_descricao",
+    "palette": "138",
+    "spec": "Definir descrição da View %s.inputOnly para %s",
+    "typeName": "",
+    "type": " ",
+    "code": "findViewById(R.id.%1$s).setContentDescription(String.valueOf(%2$s));",
+    "color": "#009688"
+  },
+  {
+    "name": "br100_view_cor_fundo",
+    "palette": "138",
+    "spec": "Definir cor de fundo da View %s.inputOnly para %d",
+    "typeName": "",
+    "type": " ",
+    "code": "findViewById(R.id.%1$s).setBackgroundColor((int) (%2$s));",
+    "color": "#009688"
+  },
+  {
+    "name": "br100_textview_tamanho",
+    "palette": "138",
+    "spec": "Definir tamanho do texto %s.inputOnly para %d sp",
+    "typeName": "",
+    "type": " ",
+    "code": "((android.widget.TextView) findViewById(R.id.%1$s)).setTextSize((float) (%2$s));",
+    "color": "#009688"
+  },
+  {
+    "name": "br100_toast",
+    "palette": "138",
+    "spec": "Mostrar aviso %s",
+    "typeName": "",
+    "type": " ",
+    "code": "android.widget.Toast.makeText(getApplicationContext(), String.valueOf(%1$s), android.widget.Toast.LENGTH_SHORT).show();",
+    "color": "#009688"
+  },
+  {
+    "name": "br100_texto_juntar",
+    "palette": "138",
+    "spec": "Juntar textos %s e %s",
+    "typeName": "",
+    "type": "s",
+    "code": "String.valueOf(%1$s) + String.valueOf(%2$s)",
+    "color": "#FF9800"
+  },
+  {
+    "name": "br100_texto_maiusculas",
+    "palette": "138",
+    "spec": "Converter %s para MAIÚSCULAS",
+    "typeName": "",
+    "type": "s",
+    "code": "String.valueOf(%1$s).toUpperCase(java.util.Locale.ROOT)",
+    "color": "#FF9800"
+  },
+  {
+    "name": "br100_texto_minusculas",
+    "palette": "138",
+    "spec": "Converter %s para minúsculas",
+    "typeName": "",
+    "type": "s",
+    "code": "String.valueOf(%1$s).toLowerCase(java.util.Locale.ROOT)",
+    "color": "#FF9800"
+  },
+  {
+    "name": "br100_texto_trim",
+    "palette": "138",
+    "spec": "Remover espaços das pontas de %s",
+    "typeName": "",
+    "type": "s",
+    "code": "String.valueOf(%1$s).trim()",
+    "color": "#FF9800"
+  },
+  {
+    "name": "br100_texto_tamanho",
+    "palette": "138",
+    "spec": "Obter quantidade de caracteres de %s",
+    "typeName": "",
+    "type": "d",
+    "code": "String.valueOf(%1$s).length()",
+    "color": "#FF9800"
+  },
+  {
+    "name": "br100_texto_contem",
+    "palette": "138",
+    "spec": "O texto %s contém %s?",
+    "typeName": "",
+    "type": "b",
+    "code": "String.valueOf(%1$s).contains(String.valueOf(%2$s))",
+    "color": "#FF9800"
+  },
+  {
+    "name": "br100_texto_substituir",
+    "palette": "138",
+    "spec": "Em %s substituir %s por %s",
+    "typeName": "",
+    "type": "s",
+    "code": "String.valueOf(%1$s).replace(String.valueOf(%2$s), String.valueOf(%3$s))",
+    "color": "#FF9800"
+  },
+  {
+    "name": "br100_texto_comeca",
+    "palette": "138",
+    "spec": "O texto %s começa com %s?",
+    "typeName": "",
+    "type": "b",
+    "code": "String.valueOf(%1$s).startsWith(String.valueOf(%2$s))",
+    "color": "#FF9800"
+  },
+  {
+    "name": "br100_texto_termina",
+    "palette": "138",
+    "spec": "O texto %s termina com %s?",
+    "typeName": "",
+    "type": "b",
+    "code": "String.valueOf(%1$s).endsWith(String.valueOf(%2$s))",
+    "color": "#FF9800"
+  },
+  {
+    "name": "br100_texto_vazio",
+    "palette": "138",
+    "spec": "O texto %s está vazio?",
+    "typeName": "",
+    "type": "b",
+    "code": "String.valueOf(%1$s).isEmpty()",
+    "color": "#FF9800"
+  },
+  {
+    "name": "br100_num_somar",
+    "palette": "138",
+    "spec": "Somar %d + %d",
+    "typeName": "",
+    "type": "d",
+    "code": "((double) (%1$s) + (double) (%2$s))",
+    "color": "#8BC34A"
+  },
+  {
+    "name": "br100_num_subtrair",
+    "palette": "138",
+    "spec": "Subtrair %d - %d",
+    "typeName": "",
+    "type": "d",
+    "code": "((double) (%1$s) - (double) (%2$s))",
+    "color": "#8BC34A"
+  },
+  {
+    "name": "br100_num_multiplicar",
+    "palette": "138",
+    "spec": "Multiplicar %d × %d",
+    "typeName": "",
+    "type": "d",
+    "code": "((double) (%1$s) * (double) (%2$s))",
+    "color": "#8BC34A"
+  },
+  {
+    "name": "br100_num_dividir",
+    "palette": "138",
+    "spec": "Dividir %d ÷ %d",
+    "typeName": "",
+    "type": "d",
+    "code": "((double) (%1$s) / (double) (%2$s))",
+    "color": "#8BC34A"
+  },
+  {
+    "name": "br100_num_resto",
+    "palette": "138",
+    "spec": "Obter resto de %d ÷ %d",
+    "typeName": "",
+    "type": "d",
+    "code": "((double) (%1$s) % (double) (%2$s))",
+    "color": "#8BC34A"
+  },
+  {
+    "name": "br100_num_absoluto",
+    "palette": "138",
+    "spec": "Obter valor absoluto de %d",
+    "typeName": "",
+    "type": "d",
+    "code": "Math.abs((double) (%1$s))",
+    "color": "#8BC34A"
+  },
+  {
+    "name": "br100_num_arredondar",
+    "palette": "138",
+    "spec": "Arredondar %d",
+    "typeName": "",
+    "type": "d",
+    "code": "Math.round((double) (%1$s))",
+    "color": "#8BC34A"
+  },
+  {
+    "name": "br100_num_maximo",
+    "palette": "138",
+    "spec": "Maior entre %d e %d",
+    "typeName": "",
+    "type": "d",
+    "code": "Math.max((double) (%1$s), (double) (%2$s))",
+    "color": "#8BC34A"
+  },
+  {
+    "name": "br100_num_minimo",
+    "palette": "138",
+    "spec": "Menor entre %d e %d",
+    "typeName": "",
+    "type": "d",
+    "code": "Math.min((double) (%1$s), (double) (%2$s))",
+    "color": "#8BC34A"
+  },
+  {
+    "name": "br100_num_par",
+    "palette": "138",
+    "spec": "O número %d é par?",
+    "typeName": "",
+    "type": "b",
+    "code": "(((long) (%1$s)) % 2L == 0L)",
+    "color": "#8BC34A"
+  },
+  {
+    "name": "br100_data_timestamp",
+    "palette": "138",
+    "spec": "Obter timestamp atual em milissegundos",
+    "typeName": "",
+    "type": "d",
+    "code": "System.currentTimeMillis()",
+    "color": "#795548"
+  },
+  {
+    "name": "br100_data_ano",
+    "palette": "138",
+    "spec": "Obter ano atual",
+    "typeName": "",
+    "type": "d",
+    "code": "java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)",
+    "color": "#795548"
+  },
+  {
+    "name": "br100_data_mes",
+    "palette": "138",
+    "spec": "Obter mês atual (1 a 12)",
+    "typeName": "",
+    "type": "d",
+    "code": "(java.util.Calendar.getInstance().get(java.util.Calendar.MONTH) + 1)",
+    "color": "#795548"
+  },
+  {
+    "name": "br100_data_dia",
+    "palette": "138",
+    "spec": "Obter dia do mês atual",
+    "typeName": "",
+    "type": "d",
+    "code": "java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_MONTH)",
+    "color": "#795548"
+  },
+  {
+    "name": "br100_data_hora",
+    "palette": "138",
+    "spec": "Obter hora atual (0 a 23)",
+    "typeName": "",
+    "type": "d",
+    "code": "java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY)",
+    "color": "#795548"
+  },
+  {
+    "name": "br100_data_minuto",
+    "palette": "138",
+    "spec": "Obter minuto atual",
+    "typeName": "",
+    "type": "d",
+    "code": "java.util.Calendar.getInstance().get(java.util.Calendar.MINUTE)",
+    "color": "#795548"
+  },
+  {
+    "name": "br100_data_segundo",
+    "palette": "138",
+    "spec": "Obter segundo atual",
+    "typeName": "",
+    "type": "d",
+    "code": "java.util.Calendar.getInstance().get(java.util.Calendar.SECOND)",
+    "color": "#795548"
+  },
+  {
+    "name": "br100_data_formatada",
+    "palette": "138",
+    "spec": "Obter data/hora no formato %s",
+    "typeName": "",
+    "type": "s",
+    "code": "new java.text.SimpleDateFormat(String.valueOf(%1$s), java.util.Locale.getDefault()).format(new java.util.Date())",
+    "color": "#795548"
+  },
+  {
+    "name": "br100_data_dia_semana",
+    "palette": "138",
+    "spec": "Obter dia da semana (1=domingo)",
+    "typeName": "",
+    "type": "d",
+    "code": "java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_WEEK)",
+    "color": "#795548"
+  },
+  {
+    "name": "br100_data_bissexto",
+    "palette": "138",
+    "spec": "O ano %d é bissexto?",
+    "typeName": "",
+    "type": "b",
+    "code": "(new java.util.GregorianCalendar()).isLeapYear((int) (%1$s))",
+    "color": "#795548"
+  },
+  {
+    "name": "br100_arquivo_escrever",
+    "palette": "138",
+    "spec": "Salvar no arquivo %s o texto %s",
+    "typeName": "",
+    "type": " ",
+    "code": "try { java.io.FileOutputStream br100_fos = openFileOutput(String.valueOf(%1$s), android.content.Context.MODE_PRIVATE); br100_fos.write(String.valueOf(%2$s).getBytes(\"UTF-8\")); br100_fos.close(); } catch (Exception br100_e) { android.util.Log.e(\"BlocosBR100\", \"Erro ao salvar arquivo\", br100_e); }",
+    "color": "#607D8B"
+  },
+  {
+    "name": "br100_arquivo_existe",
+    "palette": "138",
+    "spec": "O arquivo %s existe?",
+    "typeName": "",
+    "type": "b",
+    "code": "new java.io.File(getFilesDir(), String.valueOf(%1$s)).exists()",
+    "color": "#607D8B"
+  },
+  {
+    "name": "br100_arquivo_apagar",
+    "palette": "138",
+    "spec": "Apagar o arquivo %s",
+    "typeName": "",
+    "type": " ",
+    "code": "new java.io.File(getFilesDir(), String.valueOf(%1$s)).delete();",
+    "color": "#607D8B"
+  },
+  {
+    "name": "br100_arquivo_tamanho",
+    "palette": "138",
+    "spec": "Obter tamanho do arquivo %s em bytes",
+    "typeName": "",
+    "type": "d",
+    "code": "new java.io.File(getFilesDir(), String.valueOf(%1$s)).length()",
+    "color": "#607D8B"
+  },
+  {
+    "name": "br100_arquivo_criar_pasta",
+    "palette": "138",
+    "spec": "Criar pasta interna %s",
+    "typeName": "",
+    "type": " ",
+    "code": "new java.io.File(getFilesDir(), String.valueOf(%1$s)).mkdirs();",
+    "color": "#607D8B"
+  },
+  {
+    "name": "br100_arquivo_pasta_existe",
+    "palette": "138",
+    "spec": "A pasta interna %s existe?",
+    "typeName": "",
+    "type": "b",
+    "code": "new java.io.File(getFilesDir(), String.valueOf(%1$s)).isDirectory()",
+    "color": "#607D8B"
+  },
+  {
+    "name": "br100_arquivo_listar_qtd",
+    "palette": "138",
+    "spec": "Contar arquivos na pasta interna %s",
+    "typeName": "",
+    "type": "d",
+    "code": "((new java.io.File(getFilesDir(), String.valueOf(%1$s)).listFiles()) == null ? 0 : new java.io.File(getFilesDir(), String.valueOf(%1$s)).listFiles().length)",
+    "color": "#607D8B"
+  },
+  {
+    "name": "br100_arquivo_renomear",
+    "palette": "138",
+    "spec": "Renomear arquivo %s para %s",
+    "typeName": "",
+    "type": " ",
+    "code": "new java.io.File(getFilesDir(), String.valueOf(%1$s)).renameTo(new java.io.File(getFilesDir(), String.valueOf(%2$s)));",
+    "color": "#607D8B"
+  },
+  {
+    "name": "br100_arquivo_limpar_cache",
+    "palette": "138",
+    "spec": "Limpar arquivos do cache do aplicativo",
+    "typeName": "",
+    "type": " ",
+    "code": "try { java.io.File br100_dir = getCacheDir(); java.io.File[] br100_files = br100_dir.listFiles(); if (br100_files != null) { for (java.io.File br100_file : br100_files) { if (br100_file.isFile()) br100_file.delete(); } } } catch (Exception br100_e) { android.util.Log.e(\"BlocosBR100\", \"Erro ao limpar cache\", br100_e); }",
+    "color": "#607D8B"
+  },
+  {
+    "name": "br100_arquivo_caminho",
+    "palette": "138",
+    "spec": "Obter caminho da pasta privada do aplicativo",
+    "typeName": "",
+    "type": "s",
+    "code": "getFilesDir().getAbsolutePath()",
+    "color": "#607D8B"
+  },
+  {
+    "name": "br100_url_codificar",
+    "palette": "138",
+    "spec": "Codificar texto para URL %s",
+    "typeName": "",
+    "type": "s",
+    "code": "android.net.Uri.encode(String.valueOf(%1$s))",
+    "color": "#03A9F4"
+  },
+  {
+    "name": "br100_url_decodificar",
+    "palette": "138",
+    "spec": "Decodificar texto de URL %s",
+    "typeName": "",
+    "type": "s",
+    "code": "android.net.Uri.decode(String.valueOf(%1$s))",
+    "color": "#03A9F4"
+  },
+  {
+    "name": "br100_url_valida",
+    "palette": "138",
+    "spec": "O endereço %s parece ser uma URL válida?",
+    "typeName": "",
+    "type": "b",
+    "code": "(String.valueOf(%1$s).matches(\"(?i)^https?://[^\\\\s]+$\"))",
+    "color": "#03A9F4"
+  },
+  {
+    "name": "br100_url_host",
+    "palette": "138",
+    "spec": "Obter domínio da URL %s",
+    "typeName": "",
+    "type": "s",
+    "code": "java.net.URI.create(String.valueOf(%1$s)).getHost()",
+    "color": "#03A9F4"
+  },
+  {
+    "name": "br100_url_protocolo",
+    "palette": "138",
+    "spec": "Obter protocolo da URL %s",
+    "typeName": "",
+    "type": "s",
+    "code": "java.net.URI.create(String.valueOf(%1$s)).getScheme()",
+    "color": "#03A9F4"
+  },
+  {
+    "name": "br100_url_porta",
+    "palette": "138",
+    "spec": "Obter porta da URL %s",
+    "typeName": "",
+    "type": "d",
+    "code": "java.net.URI.create(String.valueOf(%1$s)).getPort()",
+    "color": "#03A9F4"
+  },
+  {
+    "name": "br100_url_caminho",
+    "palette": "138",
+    "spec": "Obter caminho da URL %s",
+    "typeName": "",
+    "type": "s",
+    "code": "java.net.URI.create(String.valueOf(%1$s)).getPath()",
+    "color": "#03A9F4"
+  },
+  {
+    "name": "br100_url_abrir",
+    "palette": "138",
+    "spec": "Abrir endereço %s no navegador",
+    "typeName": "",
+    "type": " ",
+    "code": "startActivity(new android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(String.valueOf(%1$s))));",
+    "color": "#03A9F4"
+  },
+  {
+    "name": "br100_url_compartilhar",
+    "palette": "138",
+    "spec": "Compartilhar endereço %s",
+    "typeName": "",
+    "type": " ",
+    "code": "{ android.content.Intent br100_share = new android.content.Intent(android.content.Intent.ACTION_SEND); br100_share.setType(\"text/plain\"); br100_share.putExtra(android.content.Intent.EXTRA_TEXT, String.valueOf(%1$s)); startActivity(android.content.Intent.createChooser(br100_share, \"Compartilhar\")); }",
+    "color": "#03A9F4"
+  },
+  {
+    "name": "br100_url_contem_https",
+    "palette": "138",
+    "spec": "O endereço %s usa HTTPS?",
+    "typeName": "",
+    "type": "b",
+    "code": "String.valueOf(%1$s).toLowerCase(java.util.Locale.ROOT).startsWith(\"https://\")",
+    "color": "#03A9F4"
+  },
+  {
+    "name": "br100_seg_base64_codificar",
+    "palette": "138",
+    "spec": "Codificar em Base64 o texto %s",
+    "typeName": "",
+    "type": "s",
+    "code": "android.util.Base64.encodeToString(String.valueOf(%1$s).getBytes(java.nio.charset.StandardCharsets.UTF_8), android.util.Base64.NO_WRAP)",
+    "color": "#F44336"
+  },
+  {
+    "name": "br100_seg_base64_decodificar",
+    "palette": "138",
+    "spec": "Decodificar Base64 %s",
+    "typeName": "",
+    "type": "s",
+    "code": "new String(android.util.Base64.decode(String.valueOf(%1$s), android.util.Base64.DEFAULT))",
+    "color": "#F44336"
+  },
+  {
+    "name": "br100_seg_uuid",
+    "palette": "138",
+    "spec": "Gerar identificador UUID",
+    "typeName": "",
+    "type": "s",
+    "code": "java.util.UUID.randomUUID().toString()",
+    "color": "#F44336"
+  },
+  {
+    "name": "br100_seg_aleatorio",
+    "palette": "138",
+    "spec": "Gerar número aleatório entre %d e %d",
+    "typeName": "",
+    "type": "d",
+    "code": "(new java.util.Random()).nextInt(((int) (%2$s) - (int) (%1$s)) + 1) + (int) (%1$s)",
+    "color": "#F44336"
+  },
+  {
+    "name": "br100_seg_senha_tamanho",
+    "palette": "138",
+    "spec": "A senha %s tem pelo menos %d caracteres?",
+    "typeName": "",
+    "type": "b",
+    "code": "String.valueOf(%1$s).length() >= (int) (%2$s)",
+    "color": "#F44336"
+  },
+  {
+    "name": "br100_seg_email",
+    "palette": "138",
+    "spec": "O texto %s tem formato básico de e-mail?",
+    "typeName": "",
+    "type": "b",
+    "code": "android.util.Patterns.EMAIL_ADDRESS.matcher(String.valueOf(%1$s)).matches()",
+    "color": "#F44336"
+  },
+  {
+    "name": "br100_seg_numerico",
+    "palette": "138",
+    "spec": "O texto %s contém somente números?",
+    "typeName": "",
+    "type": "b",
+    "code": "String.valueOf(%1$s).matches(\"[0-9]+\")",
+    "color": "#F44336"
+  },
+  {
+    "name": "br100_seg_hash_java",
+    "palette": "138",
+    "spec": "Obter hashCode Java do texto %s",
+    "typeName": "",
+    "type": "d",
+    "code": "String.valueOf(%1$s).hashCode()",
+    "color": "#F44336"
+  },
+  {
+    "name": "br100_seg_limpar_html",
+    "palette": "138",
+    "spec": "Remover tags HTML simples de %s",
+    "typeName": "",
+    "type": "s",
+    "code": "String.valueOf(%1$s).replaceAll(\"<[^>]*>\", \"\")",
+    "color": "#F44336"
+  },
+  {
+    "name": "br100_seg_comparar",
+    "palette": "138",
+    "spec": "Comparar textos %s e %s (iguais?)",
+    "typeName": "",
+    "type": "b",
+    "code": "String.valueOf(%1$s).equals(String.valueOf(%2$s))",
+    "color": "#F44336"
+  },
+  {
+    "name": "br100_app_compartilhar_texto",
+    "palette": "138",
+    "spec": "Compartilhar texto %s",
+    "typeName": "",
+    "type": " ",
+    "code": "android.content.Intent br100_i = new android.content.Intent(android.content.Intent.ACTION_SEND); br100_i.setType(\"text/plain\"); br100_i.putExtra(android.content.Intent.EXTRA_TEXT, String.valueOf(%1$s)); startActivity(android.content.Intent.createChooser(br100_i, \"Compartilhar texto\"));",
+    "color": "#9C27B0"
+  },
+  {
+    "name": "br100_app_ligar",
+    "palette": "138",
+    "spec": "Abrir discador com número %s",
+    "typeName": "",
+    "type": " ",
+    "code": "startActivity(new android.content.Intent(android.content.Intent.ACTION_DIAL, android.net.Uri.parse(\"tel:\" + String.valueOf(%1$s))));",
+    "color": "#9C27B0"
+  },
+  {
+    "name": "br100_app_email",
+    "palette": "138",
+    "spec": "Abrir aplicativo de e-mail para %s com assunto %s",
+    "typeName": "",
+    "type": " ",
+    "code": "{ android.content.Intent br100_mail = new android.content.Intent(android.content.Intent.ACTION_SENDTO); br100_mail.setData(android.net.Uri.parse(\"mailto:\" + String.valueOf(%1$s))); br100_mail.putExtra(android.content.Intent.EXTRA_SUBJECT, String.valueOf(%2$s)); startActivity(br100_mail); }",
+    "color": "#9C27B0"
+  },
+  {
+    "name": "br100_app_copiar",
+    "palette": "138",
+    "spec": "Copiar para área de transferência o texto %s",
+    "typeName": "",
+    "type": " ",
+    "code": "((android.content.ClipboardManager) getSystemService(android.content.Context.CLIPBOARD_SERVICE)).setPrimaryClip(android.content.ClipData.newPlainText(\"texto\", String.valueOf(%1$s)));",
+    "color": "#9C27B0"
+  },
+  {
+    "name": "br100_app_abrir_config",
+    "palette": "138",
+    "spec": "Abrir configurações do Android",
+    "typeName": "",
+    "type": " ",
+    "code": "startActivity(new android.content.Intent(android.provider.Settings.ACTION_SETTINGS));",
+    "color": "#9C27B0"
+  },
+  {
+    "name": "br100_app_info",
+    "palette": "138",
+    "spec": "Abrir informações deste aplicativo",
+    "typeName": "",
+    "type": " ",
+    "code": "startActivity(new android.content.Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS, android.net.Uri.parse(\"package:\" + getPackageName())));",
+    "color": "#9C27B0"
+  },
+  {
+    "name": "br100_app_pacote",
+    "palette": "138",
+    "spec": "Obter nome do pacote do aplicativo",
+    "typeName": "",
+    "type": "s",
+    "code": "getPackageName()",
+    "color": "#9C27B0"
+  },
+  {
+    "name": "br100_app_abrir_pacote",
+    "palette": "138",
+    "spec": "Tentar abrir aplicativo com pacote %s",
+    "typeName": "",
+    "type": " ",
+    "code": "{ android.content.Intent br100_launch = getPackageManager().getLaunchIntentForPackage(String.valueOf(%1$s)); if (br100_launch != null) startActivity(br100_launch); }",
+    "color": "#9C27B0"
+  },
+  {
+    "name": "br100_app_toast_longo",
+    "palette": "138",
+    "spec": "Mostrar aviso longo %s",
+    "typeName": "",
+    "type": " ",
+    "code": "android.widget.Toast.makeText(getApplicationContext(), String.valueOf(%1$s), android.widget.Toast.LENGTH_LONG).show();",
+    "color": "#9C27B0"
+  },
+  {
+    "name": "br100_app_vibrar",
+    "palette": "138",
+    "spec": "Vibrar por %s milissegundos",
+    "typeName": "",
+    "type": " ",
+    "code": "if (android.os.Build.VERSION.SDK_INT >= 26) { ((android.os.Vibrator) getSystemService(android.content.Context.VIBRATOR_SERVICE)).vibrate(android.os.VibrationEffect.createOneShot((long) (%1$s), android.os.VibrationEffect.DEFAULT_AMPLITUDE)); } else { ((android.os.Vibrator) getSystemService(android.content.Context.VIBRATOR_SERVICE)).vibrate((long) (%1$s)); }",
+    "color": "#9C27B0"
+  },
+  {
+    "name": "br100_adv_log",
+    "palette": "138",
+    "spec": "Registrar no Logcat a mensagem %s",
+    "typeName": "",
+    "type": " ",
+    "code": "android.util.Log.d(\"BlocosBR100\", String.valueOf(%1$s));",
+    "color": "#673AB7"
+  },
+  {
+    "name": "br100_adv_log_erro",
+    "palette": "138",
+    "spec": "Registrar erro no Logcat %s",
+    "typeName": "",
+    "type": " ",
+    "code": "android.util.Log.e(\"BlocosBR100\", String.valueOf(%1$s));",
+    "color": "#673AB7"
+  },
+  {
+    "name": "br100_adv_memoria_livre",
+    "palette": "138",
+    "spec": "Obter memória livre da JVM em bytes",
+    "typeName": "",
+    "type": "d",
+    "code": "Runtime.getRuntime().freeMemory()",
+    "color": "#673AB7"
+  },
+  {
+    "name": "br100_adv_memoria_total",
+    "palette": "138",
+    "spec": "Obter memória total da JVM em bytes",
+    "typeName": "",
+    "type": "d",
+    "code": "Runtime.getRuntime().totalMemory()",
+    "color": "#673AB7"
+  },
+  {
+    "name": "br100_adv_memoria_max",
+    "palette": "138",
+    "spec": "Obter memória máxima da JVM em bytes",
+    "typeName": "",
+    "type": "d",
+    "code": "Runtime.getRuntime().maxMemory()",
+    "color": "#673AB7"
+  },
+  {
+    "name": "br100_adv_thread",
+    "palette": "138",
+    "spec": "Obter nome da thread atual",
+    "typeName": "",
+    "type": "s",
+    "code": "Thread.currentThread().getName()",
+    "color": "#673AB7"
+  },
+  {
+    "name": "br100_adv_thread_id",
+    "palette": "138",
+    "spec": "Obter ID da thread atual",
+    "typeName": "",
+    "type": "d",
+    "code": "Thread.currentThread().getId()",
+    "color": "#673AB7"
+  },
+  {
+    "name": "br100_adv_timestamp_ns",
+    "palette": "138",
+    "spec": "Obter tempo monotônico em nanossegundos",
+    "typeName": "",
+    "type": "d",
+    "code": "System.nanoTime()",
+    "color": "#673AB7"
+  },
+  {
+    "name": "br100_adv_gc",
+    "palette": "138",
+    "spec": "Solicitar coleta de lixo da memória",
+    "typeName": "",
+    "type": " ",
+    "code": "System.gc();",
+    "color": "#673AB7"
+  },
+  {
+    "name": "br100_adv_pausar",
+    "palette": "138",
+    "spec": "Pausar execução por %s milissegundos",
+    "typeName": "",
+    "type": " ",
+    "code": "try { Thread.sleep((long) (%1$s)); } catch (InterruptedException br100_e) { Thread.currentThread().interrupt(); }",
+    "color": "#673AB7"
+  }
+]
