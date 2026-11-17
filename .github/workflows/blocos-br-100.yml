@@ -1,0 +1,36 @@
+name: Build Blocos BR 100 ZIP
+
+on:
+  push:
+    branches:
+      - prisma/bootstrap
+    paths:
+      - "BlocosBR100/**"
+      - ".github/workflows/blocos-br-100.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: prisma/bootstrap
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Build JSON and ZIP
+        run: python BlocosBR100/build_package.py
+      - name: Commit generated package
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add BlocosBR100/BlocosBR100.json BlocosBR100/CATALOGO.md BlocosBR100.zip
+          if ! git diff --cached --quiet; then
+            git commit -m "Build Blocos BR 100 package"
+            git push
+          fi
