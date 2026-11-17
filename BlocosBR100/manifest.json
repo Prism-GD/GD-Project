@@ -1,0 +1,31 @@
+{
+  "name": "Blocos BR 100",
+  "version": "0.1.0",
+  "format": "Sketchware Pro Custom Blocks JSON",
+  "total_blocks": 100,
+  "categories": {
+    "Sistema e dispositivo": 10,
+    "Interface": 10,
+    "Texto": 10,
+    "Matemática": 10,
+    "Data e hora": 10,
+    "Arquivos": 10,
+    "Internet": 10,
+    "Segurança": 10,
+    "Aplicativos": 10,
+    "Avançado": 10
+  },
+  "block_types": {
+    "s": "String/text output",
+    "d": "Number output",
+    "b": "Boolean output",
+    " ": "Regular command"
+  },
+  "source_reference": "Alert Notification.json supplied by the user",
+  "validation": {
+    "json_valid": true,
+    "unique_names": true,
+    "spec_placeholders_checked": true,
+    "runtime_compile_tested": false
+  }
+}
